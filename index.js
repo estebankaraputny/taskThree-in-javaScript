@@ -158,8 +158,10 @@ const data={
     ]
   }
   
+
   
-  const cardsFill = () =>{
+  
+const cardsFill = () =>{
     let cards = ``; 
     const cardSelect = document.getElementById("card");
     for (let i = 0; i < data.eventos.length; i++){
@@ -186,42 +188,70 @@ const data={
 
 cardsFill();
 
+const navContent = document.getElementById("navContent")
+const eventsVar = data.eventos.map(evento => evento.category);
+console.log(eventsVar)
 
-const inputsCheckbox = document.querySelectorAll(".inputCheckbox")
-const categoryCard = document.getElementById("category")
+let category = eventsVar.filter((arrCategory, index) => {
+  return eventsVar.indexOf(arrCategory) === index;
+})
 
+console.log(category)
 
-inputsCheckbox.addEventListener("change", (event) => {
-  cards.textContent = ``;
-  inputsCheckbox.forEach((inputCheckbox) =>{
-    if (inputCheckbox.checked == true){
-      console.log(event.value);
-      // categoryCard.textContent = inputCheckbox.value;
-      // cardSelect.appenChild(categoryCard);
+category.forEach((inputCheckbox) =>{
+  const div = document.createElement("div")
+  div.innerHTML = `
+                      <input type="checkbox" id="${inputCheckbox.replace(' ','-').toLowerCase()}" class="inputCheckbox">
+                      <label for="inputCheckbox">${inputCheckbox}</label>`
+  navContent.appendChild(div);
+})
+
+const inputsCheck = document.querySelectorAll(".inputCheckbox")
+
+inputsCheck.addEventListener("click", (event) => {
+  inputsCheck.forEach((inputCheck) =>{
+    if (inputCheck.checked){
+      // category.textContent = inputCheck.value;
+      cardsFill()
     }
-  });
-})
-
-// ${data.evento[i].replace(' ','-').toLowerCase()}
-
-const renderCards = () => {
-  data.map((card) => {
-    const cardItem = document.createElement("div")
-    cardItem.textContent = cards;
-    cardSelect.appenChild(cardItem)
-  })
-}
-renderCards()
-
-const buttonSearch = document.getElementById("button__search")
-const inputSearch = document.getElementById("text__search")
-
-const eventDate = data.name;
-
-inputSearch.addEventListener ("keyup", (event) =>{
-  cardSelect.forEach((cardItem) => {
-    cardItem.textContent.toLowerCase().includes(event.target.value.toLowerCase())
-    ? cardItem.classList.remove("hidden")
-    : cardItem.classList.add("hidden");
   })
 })
+
+
+// const categoryCard = document.getElementById("category")
+
+
+// inputsCheckbox.addEventListener("click", (event) => {
+//   cards.textContent = ``;
+//   inputsCheckbox.forEach((inputCheckbox) =>{
+//     if (inputCheckbox.checked == true){
+//       console.log(event.value);
+//       // categoryCard.textContent = inputCheckbox.value;
+//       // cardSelect.appenChild(categoryCard);
+//     }
+//   });
+// })
+
+// //
+
+// const renderCards = () => {
+//   data.map((card) => {
+//     const cardItem = document.createElement("div")
+//     cardItem.textContent = cards;
+//     cardSelect.appenChild(cardItem)
+//   })
+// }
+// renderCards()
+
+// const buttonSearch = document.getElementById("button__search")
+// const inputSearch = document.getElementById("text__search")
+
+// const eventDate = data.name;
+
+// inputSearch.addEventListener ("keyup", (event) =>{
+//   cardSelect.forEach((cardItem) => {
+//     cardItem.textContent.toLowerCase().includes(event.target.value.toLowerCase())
+//     ? cardItem.classList.remove("hidden")
+//     : cardItem.classList.add("hidden");
+//   })
+// })
