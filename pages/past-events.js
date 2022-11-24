@@ -168,7 +168,7 @@ dateSplit[1] - 1,
 dateSplit[2]
 );
 const dateTimeStamp = dateToCompareParsed.getTime();
-console.log("dateTimeStamp", dateTimeStamp)
+// console.log("dateTimeStamp", dateTimeStamp)
 
 function cardsFill(){
 let cards = ``;
@@ -205,3 +205,91 @@ for (let i = 0; i < data.eventos.length; i++){
 }
 }
 cardsFill()
+
+
+
+//FILTRAR POR CHECKBOX
+
+const navContent = document.getElementById("navContent")
+const eventsVar = data.eventos.map(evento => evento.category);
+// console.log(eventsVar)
+
+let category = eventsVar.filter((arrCategory, index) => {
+  return eventsVar.indexOf(arrCategory) === index;
+})
+
+// console.log(category)
+
+category.forEach((inputCheckbox) =>{
+  const div = document.createElement("div")
+  div.innerHTML = `
+                      <input type="checkbox" id="${inputCheckbox.replace(' ','-').toLowerCase()}" class="inputCheckbox" value="${inputCheckbox}">
+                      <label for="inputCheckbox">${inputCheckbox}</label>`
+  navContent.appendChild(div);
+})
+
+// console.log("inputsCheck", inputsCheck[3].value)
+// console.log("inputsCheck sin value", inputsCheck)
+// console.log(categoryCard[1].textContent);
+
+navContent.addEventListener("click", () => {
+  const arrayChecked = [];
+  
+  const categoryCards = document.querySelectorAll(".categoryCard")
+  
+  const inputsCheck = document.querySelectorAll(".inputCheckbox")
+  
+  inputsCheck.forEach((inputCheck) =>{
+    if (inputCheck.checked){
+      arrayChecked.push(inputCheck.value)
+    }
+  });
+   categoryCards.forEach((categoryCard) => {
+      if (arrayChecked.includes(categoryCard.textContent)){
+        categoryCard.parentElement.classList.remove("hidden")
+      }else{
+        categoryCard.parentElement.classList.add("hidden")
+      }
+    });
+
+    if (arrayChecked.length === 0){
+        categoryCards.forEach((card) => {
+          card.parentElement.classList.remove("hidden")
+        });
+    }
+
+  // console.log(categoryCards)
+  // console.log(arrayChecked)
+  
+})
+
+// FILTRAR POR INPUT SEARCH
+
+const inputSearch = document.getElementById("textSearch")
+const cardsAll = document.querySelectorAll(".card")
+// console.log("Card All",cardsAll)
+
+inputSearch.addEventListener("keyup", (event) =>{
+  let arrayContentCardHidden = [];
+  const menssageErr = document.getElementById("menssageError")
+  let menssagge= ``
+  cardsAll.forEach((card) => {
+
+    card.textContent.toLowerCase().includes(event.target.value.toLowerCase())
+    ? card.classList.remove("hidden") // Si cae en true la sentencia anterior, ocurre esto
+    : card.classList.add("hidden") // Si cae en false la sentencia anterior, ocurre esto
+
+    if(card.classList.contains("hidden")){
+      arrayContentCardHidden.push(card)
+    }
+  })
+
+  if(arrayContentCardHidden.length === cardsAll.length){
+    menssagge += `
+      <h4>Evento no encontrado, por favor vuelva a intentarlo</h4>
+    `
+  }
+  menssageErr.innerHTML = menssagge; //Mensaje que solo se mostrara si no se encuentra lo ingresado en el input
+})
+
+

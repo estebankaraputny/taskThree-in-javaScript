@@ -162,12 +162,13 @@ const data={
   
   
 const cardsFill = () =>{
-    let cards = ``; 
     const cardSelect = document.getElementById("card");
+    let cards = ``; 
     for (let i = 0; i < data.eventos.length; i++){
         cards += `
         <div class="d-flex justify-content-between" id="category">
-          <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-5">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-5">
+        <span style="display:none;" class="categoryCard">${data.eventos[i].category}</span>
             <div class="card" style="width: 15rem">
               <img src="${data.eventos[i].image}" class="card-img-top"alt="..."/>
                 <div class="card-body">
@@ -184,9 +185,11 @@ const cardsFill = () =>{
             `
     }
     cardSelect.innerHTML = cards;
-}
+  }
+  
+  cardsFill();
 
-cardsFill();
+//FILTRAR POR CHECKBOX
 
 const navContent = document.getElementById("navContent")
 const eventsVar = data.eventos.map(evento => evento.category);
@@ -201,57 +204,73 @@ console.log(category)
 category.forEach((inputCheckbox) =>{
   const div = document.createElement("div")
   div.innerHTML = `
-                      <input type="checkbox" id="${inputCheckbox.replace(' ','-').toLowerCase()}" class="inputCheckbox">
+                      <input type="checkbox" id="${inputCheckbox.replace(' ','-').toLowerCase()}" class="inputCheckbox" value="${inputCheckbox}">
                       <label for="inputCheckbox">${inputCheckbox}</label>`
   navContent.appendChild(div);
 })
 
-const inputsCheck = document.querySelectorAll(".inputCheckbox")
+// console.log("inputsCheck", inputsCheck[3].value)
+// console.log("inputsCheck sin value", inputsCheck)
+// console.log(categoryCard[1].textContent);
 
-inputsCheck.addEventListener("click", (event) => {
+navContent.addEventListener("click", () => {
+  const arrayChecked = [];
+  
+  const categoryCards = document.querySelectorAll(".categoryCard")
+  
+  const inputsCheck = document.querySelectorAll(".inputCheckbox")
+  
   inputsCheck.forEach((inputCheck) =>{
     if (inputCheck.checked){
-      // category.textContent = inputCheck.value;
-      cardsFill()
+      arrayChecked.push(inputCheck.value)
+    }
+  });
+   categoryCards.forEach((categoryCard) => {
+      if (arrayChecked.includes(categoryCard.textContent)){
+        categoryCard.parentElement.classList.remove("hidden")
+      }else{
+        categoryCard.parentElement.classList.add("hidden")
+      }
+    });
+
+    if (arrayChecked.length === 0){
+        categoryCards.forEach((card) => {
+          card.parentElement.classList.remove("hidden")
+        });
+    }
+
+  // console.log(categoryCards)
+  // console.log(arrayChecked)
+  
+})
+
+// FILTRAR POR INPUT SEARCH
+
+const inputSearch = document.getElementById("textSearch")
+const cardsAll = document.querySelectorAll(".card")
+// console.log("Card All",cardsAll)
+
+inputSearch.addEventListener("keyup", (event) =>{
+  let arrayContentCardHidden = [];
+  const menssageErr = document.getElementById("menssageError")
+  let menssagge= ``
+  cardsAll.forEach((card) => {
+
+    card.textContent.toLowerCase().includes(event.target.value.toLowerCase())
+    ? card.classList.remove("hidden") // Si cae en true la sentencia anterior, ocurre esto
+    : card.classList.add("hidden") // Si cae en false la sentencia anterior, ocurre esto
+
+    if(card.classList.contains("hidden")){
+      arrayContentCardHidden.push(card)
     }
   })
+
+  if(arrayContentCardHidden.length === cardsAll.length){
+    menssagge += `
+      <h4>Evento no encontrado, por favor vuelva a intentarlo</h4>
+    `
+  }
+  menssageErr.innerHTML = menssagge; //Mensaje que solo se mostrara si no se encuentra lo ingresado en el input
 })
 
 
-// const categoryCard = document.getElementById("category")
-
-
-// inputsCheckbox.addEventListener("click", (event) => {
-//   cards.textContent = ``;
-//   inputsCheckbox.forEach((inputCheckbox) =>{
-//     if (inputCheckbox.checked == true){
-//       console.log(event.value);
-//       // categoryCard.textContent = inputCheckbox.value;
-//       // cardSelect.appenChild(categoryCard);
-//     }
-//   });
-// })
-
-// //
-
-// const renderCards = () => {
-//   data.map((card) => {
-//     const cardItem = document.createElement("div")
-//     cardItem.textContent = cards;
-//     cardSelect.appenChild(cardItem)
-//   })
-// }
-// renderCards()
-
-// const buttonSearch = document.getElementById("button__search")
-// const inputSearch = document.getElementById("text__search")
-
-// const eventDate = data.name;
-
-// inputSearch.addEventListener ("keyup", (event) =>{
-//   cardSelect.forEach((cardItem) => {
-//     cardItem.textContent.toLowerCase().includes(event.target.value.toLowerCase())
-//     ? cardItem.classList.remove("hidden")
-//     : cardItem.classList.add("hidden");
-//   })
-// })
