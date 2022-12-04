@@ -157,120 +157,242 @@ const data={
       }
     ]
   }
+
+
+  const events = data.eventos; 
+  const searchBtn = document.getElementById('search-btn'); 
+  let inputSearch = document.getElementById('user-search'); 
   
+
+  const sectionHome = document.getElementById('sectionCards-home');
+  const sectionPast = document.getElementById('sectionCards-past');
+  const sectionUpcoming = document.getElementById('sectionCards-upcoming');
+  const mainDetails = document.getElementById('main-details');
+
 
   
   
-const cardsFill = () =>{
-    const cardSelect = document.getElementById("card");
-    let cards = ``; 
-    for (let i = 0; i < data.eventos.length; i++){
-        cards += `
-        <div class="d-flex justify-content-between" id="category">
-        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-5">
-        <span style="display:none;" class="categoryCard">${data.eventos[i].category}</span>
-            <div class="card" style="width: 15rem">
-              <img src="${data.eventos[i].image}" class="card-img-top"alt="..."/>
-                <div class="card-body">
-                    <h5 class="card-title">${data.eventos[i].name}</h5>
-                    <p class="card-text">${data.eventos[i].description}</p>
-                    <div class="card-price d-flex justify-content-between align-items-center">
-                        <p class="m-0">$${data.eventos[i].price}</p>
+  
+  // ****************************************************************************************************************
+  // COMPARACIÓN DE FECHAS
+  
+  const pastEvents = [];
+  const upcomingEvents = [];
+  
+  const currentDate = data.fechaActual; // 2022-01-01
+  const currentDateSplit = currentDate.split("-"); // ['2022', '01', '01']
+  const currentDateTimestamp = new Date (currentDateSplit[0], currentDateSplit[1]-1, currentDateSplit[2]).getTime();
+  
+  data.eventos.map((event) => {
+      const dateToCompare = event.date;
+      const dateToCompareSplit = dateToCompare.split("-");
+      const dateToCompareTimestamp = new Date (dateToCompareSplit[0], dateToCompareSplit[1]-1, dateToCompareSplit[2]).getTime();
+  
+      if (dateToCompareTimestamp <= currentDateTimestamp) {
+          pastEvents.push(event);
+      } else {
+          upcomingEvents.push(event);
+      }
+  })
+  
+  
+  // ****************************************************************************************************************
+  // CREACIÓN Y RENDERIZACIÓN DE CARDS
+  let cards;
+  
+  const renderCards = (array, section) => {
+      const fragment = document.createDocumentFragment();
+      
+      array.map((event) => {
+          const div = document.createElement("div");
+          div.className = `section-cards_evento col-lg-3 col-md-5 col-sm-7`;
+          div.id = event.name.toLowerCase().replace(" ", "-");
+  
+          div.innerHTML = `
+              <div class="d-flex justify-content-between" id="category">
+                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-5">
+                  <div class="card" style="width: 15rem">
+                    <img src="${event.image}" class="card-img-top"alt="..."/>
+                    <div class="card-body">
+                      <h5 class="card-title">${event.name}</h5>
+                      <p class="card-text">${event.description}</p>
+                      <div class="card-price d-flex justify-content-between align-items-center">
+                        <p class="m-0">$${event.price}</p>
                         <a href="#" class="btn btn-dark btn-shadow">Know more</a>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-          </div>
-      </div> 
-            `
-    }
-    cardSelect.innerHTML = cards;
+              </div>
+                  `
+          fragment.appendChild(div);
+      })
+      section.appendChild(fragment);
+
+      cards = document.querySelectorAll('.section-cards_evento');
   }
   
-  cardsFill();
-
-//FILTRAR POR CHECKBOX
-
-const navContent = document.getElementById("navContent")
-const eventsVar = data.eventos.map(evento => evento.category);
-console.log(eventsVar)
-
-let category = eventsVar.filter((arrCategory, index) => {
-  return eventsVar.indexOf(arrCategory) === index;
-})
-
-console.log(category)
-
-category.forEach((inputCheckbox) =>{
-  const div = document.createElement("div")
-  div.innerHTML = `
-                      <input type="checkbox" id="${inputCheckbox.replace(' ','-').toLowerCase()}" class="inputCheckbox" value="${inputCheckbox}">
-                      <label for="inputCheckbox">${inputCheckbox}</label>`
-  navContent.appendChild(div);
-})
-
-// console.log("inputsCheck", inputsCheck[3].value)
-// console.log("inputsCheck sin value", inputsCheck)
-// console.log(categoryCard[1].textContent);
-
-navContent.addEventListener("click", () => {
-  const arrayChecked = [];
   
-  const categoryCards = document.querySelectorAll(".categoryCard")
+  let currentURL = window.location.pathname.split("/").pop();
   
-  const inputsCheck = document.querySelectorAll(".inputCheckbox")
+  if (currentURL == "index.html") {
+      renderCards(events, sectionHome);
+  } else if (currentURL == "pastEvents.html") {
+      renderCards(pastEvents, sectionPast);
+  } else if (currentURL == "upcomingEvents.html") {
+      renderCards(upcomingEvents, sectionUpcoming);
+  }
   
-  inputsCheck.forEach((inputCheck) =>{
-    if (inputCheck.checked){
-      arrayChecked.push(inputCheck.value)
-    }
-  });
-   categoryCards.forEach((categoryCard) => {
-      if (arrayChecked.includes(categoryCard.textContent)){
-        categoryCard.parentElement.classList.remove("hidden")
-      }else{
-        categoryCard.parentElement.classList.add("hidden")
+  
+  
+  
+  
+  
+  // RENDERIZAR CHECKBOX DE CATEGORÍAS DINAMICAMENTE
+
+  const eventsCategories = events.map((event) => event.category);
+  
+  
+  const sevenEventsCategories = [];
+  
+  for (let i=0; i < eventsCategories.length; i++) {
+      if (eventsCategories.indexOf(eventsCategories[i], 0) == i) {
+          sevenEventsCategories.push(eventsCategories[i]);
       }
-    });
-
-    if (arrayChecked.length === 0){
-        categoryCards.forEach((card) => {
-          card.parentElement.classList.remove("hidden")
-        });
-    }
-
-  // console.log(categoryCards)
-  // console.log(arrayChecked)
+  }
   
-})
+  
+  function renderCategories() {
+      const containerCategories = document.getElementById('box-categorias');
+      const fragment = document.createDocumentFragment();
+  
+      sevenEventsCategories.map((eventCategory) => {
+          const div = document.createElement('div');
+          div.innerHTML = `
+              <input id="${eventCategory.toLowerCase().replaceAll(" ", "-")}" name="categoria" value="${eventCategory.toLowerCase().replace(" ", "-")}" type="checkbox">
+              <label for="${eventCategory.toLowerCase().replaceAll(" ", "-")}">${eventCategory}</label>
+              `
+          fragment.appendChild(div);
+      })
+  
+      containerCategories.appendChild(fragment);
+  }
+  
+  renderCategories();
+  
+  
+  const checkboxs = document.querySelectorAll('input[type="checkbox"]');
+  
+  
+  
+  
 
-// FILTRAR POR INPUT SEARCH
+  // MOSTRAR CARDS SEGÚN LO INGRESADO POR TECLADO EN EL BUSCADOR
+  let userSearch;
+  
+  inputSearch.addEventListener('keyup', () => {
+      userSearch = inputSearch.value.toLowerCase();
+      findCoincidences(userSearch);
+  })
+  
+  searchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      userSearch = inputSearch.value.toLowerCase();
+      findCoincidences(userSearch)
+  })
+  
+  
+  const findCoincidences = (search) => {
+      let cardsShown = 0;
+  
+      cards.forEach((card) => {
+          let idCard = card.id;
+  
+          if (idCard.includes(search)) {
+              card.classList.remove('hidden');
+              cardsShown++;
+          } else {
+              card.classList.add('hidden');
+          }
+      })
+  
+      if (cardsShown == 0) {
+          msgError.classList.remove('hidden')
+      } else {
+          msgError.classList.add('hidden');
+      }
+  }
+  
+  
+  
+  // MOSTRAR CARDS QUE COINCIDAN CON LAS CHECKBOX QUE ESTÉN "CHECKED"
+  
+  let checkboxsChecked = 0;
+  let evts;
+  let section;
+  let eventsToShow = [];
+  let msgError = document.getElementById("msg-error") 
+  
+  checkboxs.forEach((checkbox) => {
+      checkbox.addEventListener('change', () => {
+          
+          if (checkbox.checked) { 
+              checkboxsChecked++;
+  
+              if (currentURL == "index.html") {
+                  evts = events;
+                  section = sectionHome;
+              } else if (currentURL == "pastEvents.html") {
+                  evts = pastEvents;
+                  section = sectionPast;
+              } else if (currentURL == "upcomingEvents.html") {
+                  evts = upcomingEvents;
+                  section = sectionUpcoming;
+              }
+  
+              evts.forEach((evt) => {
+                  let eventCategory = evt.category.toLowerCase().replaceAll(" ", "-");
+                  if (checkbox.id == eventCategory) {
+                      eventsToShow.push(evt);
+                  }
+              })
+  
+              if (eventsToShow.length == 0 && checkboxsChecked > 0) {
+                  section.innerHTML = ``;
+                  msgError.classList.remove('hidden');
+              } else {
+                  section.innerHTML = ``;
+                  renderCards(eventsToShow, section);
+              }
+  
+          } else { 
+              checkboxsChecked--;
+              eventsToShow = eventsToShow.filter((eventToShow) => (
+                  eventToShow.category.toLowerCase().replaceAll(" ", "-") !== checkbox.id
+              ))
+  
+             section.innerHTML = ``;
+             renderCards(eventsToShow, section);
+          }
+          
+          if (eventsToShow.length == 0 && checkboxsChecked == 0) {
+            msgError.classList.add('hidden');
+            renderCards(evts, section);
+          }  
 
-const inputSearch = document.getElementById("textSearch")
-const cardsAll = document.querySelectorAll(".card")
-// console.log("Card All",cardsAll)
+          if (eventsToShow.length == 0 && checkboxsChecked == 0) {
+            msgError.classList.add('hidden');
+            renderCards(evts, section);
+          }  
 
-inputSearch.addEventListener("keyup", (event) =>{
-  let arrayContentCardHidden = [];
-  const menssageErr = document.getElementById("menssageError")
-  let menssagge= ``
-  cardsAll.forEach((card) => {
+          let search = inputSearch.value.toLowerCase().replaceAll(" ", "-"); 
 
-    card.textContent.toLowerCase().includes(event.target.value.toLowerCase())
-    ? card.classList.remove("hidden") // Si cae en true la sentencia anterior, ocurre esto
-    : card.classList.add("hidden") // Si cae en false la sentencia anterior, ocurre esto
-
-    if(card.classList.contains("hidden")){
-      arrayContentCardHidden.push(card)
-    }
+          if (search !== "") {
+              findCoincidences(search);
+          }
+      })
+      
   })
 
-  if(arrayContentCardHidden.length === cardsAll.length){
-    menssagge += `
-      <h4>Evento no encontrado, por favor vuelva a intentarlo</h4>
-    `
-  }
-  menssageErr.innerHTML = menssagge; //Mensaje que solo se mostrara si no se encuentra lo ingresado en el input
-})
-
-
+  
+  

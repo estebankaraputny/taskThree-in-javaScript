@@ -236,3 +236,9 @@ textarea {
 .hidden {
     display: none;
 }
+
+
+.mensajeDeError{
+    width: 60%;
+    margin: auto;
+}
