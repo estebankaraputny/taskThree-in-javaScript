@@ -156,30 +156,73 @@ const data={
         price:250
       }
     ]
-  }
-  
-    
-
-// INFORMACION DE FORNAMICA 
-
-const cardFill = () =>{
-    let cards = ``;
-    const cardSelect = document.getElementById("card");
-    for (let i = 0; i < data.eventos.length; i++){
-        cards += `
-        <div class="content_image">
-                <img src="${data.eventos[i].image}" alt="..." class="image__card--info">
-            </div>
-            <div class="content__info">
-                <h2 class="title__card">${data.eventos[i].name}</h2>
-                <p class="price__card">${data.eventos[i].price}</p>
-                <p  class="description__card">${data.eventos[i].description}<div>
-                    <button type="button" class="btn btn-dark btn__width">ORDER TICKETS</button>
-                </div>
-            </div>
-        `
-    }
-    cardSelect.innerHTML = cards;
 }
 
-cardFill();
+
+
+const detailsCards = document.getElementById("details__cards")
+
+
+
+
+// const renderCards = () => {
+//     const fragment = document.createDocumentFragment();
+
+//     data.eventos.map((event, index) =>{
+//         const div = document.createElement("div");
+
+//         div.innerHTML = `
+//         <div class="container__details">
+//             <div class="content__image">
+//                 <img src="${event.image}" alt="imagen sobre el evento" class="image__events">
+//             </div>
+//             <div class="content__infoDetails">
+//                 <h2 class="name__events">${event.name}</h2>
+//                 <p class="price__events">${event.price}</p>
+//                 <p class="category__events">${event.category}</p>
+//                 <!-- <p>Ver formas de pago</p> -->
+//                 <p class="descriptions__events">${event.description}</p>
+//                 <button type="button" class="button__buy">Buy Tickets</button>
+//             </div>
+//         </div>
+//         `
+
+//         fragment.appendChild(div)
+//     })
+
+//     detailsCards.appendChild(fragment);
+
+// }
+//  renderCards()
+
+
+const renderCards = () => {
+    const fragment = document.createDocumentFragment();
+
+    data.eventos.map((event, index) =>{
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+        <div class="container__details">
+            <div class="content__image">
+                <img src="${event.image}" alt="imagen sobre el evento" class="image__events">
+            </div>
+            <div class="content__infoDetails">
+                <h2 class="name__events">${event.name}</h2>
+                <p class="price__events">${event.price}</p>
+                <p class="category__events">${event.category}</p>
+                <!-- <p>Ver formas de pago</p> -->
+                <p class="descriptions__events">${event.description}</p>
+                <button type="button" class="button__buy">Buy Tickets</button>
+            </div>
+        </div>
+        `
+
+        fragment.appendChild(div)
+    })
+
+    detailsCards.appendChild(fragment);
+
+}
+ renderCards()
+  

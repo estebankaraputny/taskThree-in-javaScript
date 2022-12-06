@@ -242,3 +242,86 @@ textarea {
     width: 60%;
     margin: auto;
 }
+
+
+/* PAGE DETAILS */
+
+.details__cards{
+    background-color:rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.container__details{
+    width: 70%;
+    height: 70%;
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 5px ;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.452);
+}
+
+
+.content__image{
+    height: 100%;
+    width: 40%;
+}
+
+.image__events{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+.content__infoDetails{
+    width: 60%;
+    padding: 3%;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: space-evenly; */
+    color: rgb(0, 0, 0);
+}
+
+.name__events{
+    font-size: 35px;
+}
+
+.content__priceAndCat{
+
+
+    font-size: 18px;
+}
+
+
+.category__events{
+    text-align: center;
+    width: 20%;
+    background-color: rgba(82, 77, 69, 0.507);
+    border-radius: 5px;
+    padding: 5px;
+    color: rgba(0, 0, 0, 0.76);
+}
+
+.price__events{
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.descriptions__events{
+    font-size: 20px;
+}
+
+
+.button__buy{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #adb59a;
+    color: #333333;
+    margin-bottom: 20px;
+}

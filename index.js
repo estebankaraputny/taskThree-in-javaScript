@@ -218,7 +218,7 @@ const data={
                       <p class="card-text">${event.description}</p>
                       <div class="card-price d-flex justify-content-between align-items-center">
                         <p class="m-0">$${event.price}</p>
-                        <a href="#" class="btn btn-dark btn-shadow">Know more</a>
+                        <a href="#" class="btn btn-dark btn-shadow button-more">Know more</a>
                       </div>
                     </div>
                   </div>
@@ -394,5 +394,51 @@ const data={
       
   })
 
+
+
+  // PAGE DETAILS 
+
+
+const detailsCards = document.getElementById("details__cards")
+let buttonCards = document.querySelectorAll(".button-more")
+
+console.log("button", buttonCards)
+
+
+for(let i=0; i < buttonCards.length; i++){
+  buttonCards[i].addEventListener("click", () =>{
+    rendersDetails(i)
+  })
+}
+
+const rendersDetails = () => {
+  // const fragment = document.createDocumentFragment();
+
+  // data.eventos.map((event, index) =>{
+  //     const div = document.createElement("div");
+
+  //     div.innerHTML = `
+  //     <div class="container__details">
+  //         <div class="content__image">
+  //             <img src="${event.image}" alt="imagen sobre el evento" class="image__events">
+  //         </div>
+  //         <div class="content__infoDetails">
+  //             <h2 class="name__events">${event.name}</h2>
+  //             <p class="price__events">${event.price}</p>
+  //             <p class="category__events">${event.category}</p>
+  //             <!-- <p>Ver formas de pago</p> -->
+  //             <p class="descriptions__events">${event.description}</p>
+  //             <button type="button" class="button__buy">Buy Tickets</button>
+  //         </div>
+  //     </div>
+  //     `
+
+  //     fragment.appendChild(div)
+  // })
+
+  // detailsCards.appendChild(fragment);
+  console.log("Hola Mundo xD")
+}
+// rendersDetails()
   
   
