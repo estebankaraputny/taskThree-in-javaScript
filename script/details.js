@@ -167,12 +167,17 @@ const detailsCards = document.getElementById("details__cards");
 
 function renderDetails(){
 
+  const currentUrl = window.location.pathname;
+  console.log(currentUrl)
+  const imagenRemplazar = "https://i.pinimg.com/564x/79/95/eb/7995ebe5a61d943b171d33ac7c73921b.jpg";
+  
+
     data.eventos.forEach(event => {
         if(event.name.toLowerCase().replaceAll(" ", "-").includes(titleCardDetail)){
             detailsCards.innerHTML = `
                 <div class="container__details">
                     <div class="content__image">
-                      <img src="${event.image}" alt="imagen sobre el evento" class="image__events">
+                      <img src="${imagenRemplazar}" alt="imagen sobre el evento" class="image__events">
                     </div>
                     <div class="content__infoDetails">
                         <h2 class="name__events">${event.name}</h2>

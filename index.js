@@ -203,22 +203,34 @@ let cards;
 const renderCards = (array, section) => {
       const fragment = document.createDocumentFragment();
       
+      let remplazar = "";
+      let imagenRemplazar = "";
+      const currentUrl = window.location.pathname;
+
+      if(currentUrl.includes("index.html")){
+        remplazar = "./pages/details.html"
+        imagenRemplazar ="https://i.pinimg.com/564x/79/95/eb/7995ebe5a61d943b171d33ac7c73921b.jpg"
+      } else {
+        remplazar = "./details.html"
+        imagenRemplazar ="https://i.pinimg.com/564x/79/95/eb/7995ebe5a61d943b171d33ac7c73921b.jpg"
+      }
+
       array.map((event) => {
           const div = document.createElement("div");
           div.className = `section-cards_evento col-lg-3 col-md-5 col-sm-7`;
           div.id = event.name.toLowerCase().replace(" ", "-");
-  
+
           div.innerHTML = `
               <div class="d-flex justify-content-between" id="category">
                 <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-5">
                   <div class="card" style="width: 15rem">
-                    <img src="#" class="card-img-top"alt="..."/>
+                    <img src="${imagenRemplazar}" class="card-img-top"alt="..."/>
                     <div class="card-body">
                       <h5 class="card-title">${event.name}</h5>
                       <p class="card-text">${event.description}</p>
                       <div class="card-price d-flex justify-content-between align-items-center">
                         <p class="m-0">$${event.price}</p>
-                        <a href="./pages/details.html" class="btn btn-dark btn-shadow button__more" target="_blank">Know more</a>
+                        <a href="${remplazar}" class="btn btn-dark btn-shadow button__more" target="_blank" id="buttonRemplazar">Know more</a>
                       </div>
                     </div>
                   </div>
@@ -232,7 +244,11 @@ const renderCards = (array, section) => {
       cards = document.querySelectorAll('.section-cards_evento');
 }
   
-  
+
+// let remplazarButton = document.querySelectorAll("#buttonRemplazar")
+// console.log(remplazarButton)
+
+
 let currentURL = window.location.pathname.split("/").pop();
   
   if (currentURL == "index.html") {
