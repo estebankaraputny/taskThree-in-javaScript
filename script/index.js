@@ -156,18 +156,18 @@ const data={
         price:250
       }
     ]
-  }
+}
 
 
-  const events = data.eventos; 
-  const searchBtn = document.getElementById('search-btn'); 
-  let inputSearch = document.getElementById('user-search'); 
+const events = data.eventos; 
+const searchBtn = document.getElementById('search-btn'); 
+let inputSearch = document.getElementById('user-search'); 
   
 
-  const sectionHome = document.getElementById('sectionCards-home');
-  const sectionPast = document.getElementById('sectionCards-past');
-  const sectionUpcoming = document.getElementById('sectionCards-upcoming');
-  const mainDetails = document.getElementById('main-details');
+const sectionHome = document.getElementById('sectionCards-home');
+const sectionPast = document.getElementById('sectionCards-past');
+const sectionUpcoming = document.getElementById('sectionCards-upcoming');
+const mainDetails = document.getElementById('main-details');
 
 
   
@@ -176,14 +176,14 @@ const data={
   // ****************************************************************************************************************
   // COMPARACIÓN DE FECHAS
   
-  const pastEvents = [];
-  const upcomingEvents = [];
+const pastEvents = [];
+const upcomingEvents = [];
   
-  const currentDate = data.fechaActual; // 2022-01-01
-  const currentDateSplit = currentDate.split("-"); // ['2022', '01', '01']
-  const currentDateTimestamp = new Date (currentDateSplit[0], currentDateSplit[1]-1, currentDateSplit[2]).getTime();
+const currentDate = data.fechaActual; // 2022-01-01
+const currentDateSplit = currentDate.split("-"); // ['2022', '01', '01']
+const currentDateTimestamp = new Date (currentDateSplit[0], currentDateSplit[1]-1, currentDateSplit[2]).getTime();
   
-  data.eventos.map((event) => {
+data.eventos.map((event) => {
       const dateToCompare = event.date;
       const dateToCompareSplit = dateToCompare.split("-");
       const dateToCompareTimestamp = new Date (dateToCompareSplit[0], dateToCompareSplit[1]-1, dateToCompareSplit[2]).getTime();
@@ -193,14 +193,14 @@ const data={
       } else {
           upcomingEvents.push(event);
       }
-  })
+})
   
   
   // ****************************************************************************************************************
   // CREACIÓN Y RENDERIZACIÓN DE CARDS
-  let cards;
+let cards;
   
-  const renderCards = (array, section) => {
+const renderCards = (array, section) => {
       const fragment = document.createDocumentFragment();
       
       array.map((event) => {
@@ -212,13 +212,13 @@ const data={
               <div class="d-flex justify-content-between" id="category">
                 <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-5">
                   <div class="card" style="width: 15rem">
-                    <img src="${event.image}" class="card-img-top"alt="..."/>
+                    <img src="#" class="card-img-top"alt="..."/>
                     <div class="card-body">
                       <h5 class="card-title">${event.name}</h5>
                       <p class="card-text">${event.description}</p>
                       <div class="card-price d-flex justify-content-between align-items-center">
                         <p class="m-0">$${event.price}</p>
-                        <a href="#" class="btn btn-dark btn-shadow button-more">Know more</a>
+                        <a href="../pages/details.html" class="btn btn-dark btn-shadow button__more" target="_blank">Know more</a>
                       </div>
                     </div>
                   </div>
@@ -230,10 +230,10 @@ const data={
       section.appendChild(fragment);
 
       cards = document.querySelectorAll('.section-cards_evento');
-  }
+}
   
   
-  let currentURL = window.location.pathname.split("/").pop();
+let currentURL = window.location.pathname.split("/").pop();
   
   if (currentURL == "index.html") {
       renderCards(events, sectionHome);
@@ -250,10 +250,10 @@ const data={
   
   // RENDERIZAR CHECKBOX DE CATEGORÍAS DINAMICAMENTE
 
-  const eventsCategories = events.map((event) => event.category);
+const eventsCategories = events.map((event) => event.category);
   
   
-  const sevenEventsCategories = [];
+const sevenEventsCategories = [];
   
   for (let i=0; i < eventsCategories.length; i++) {
       if (eventsCategories.indexOf(eventsCategories[i], 0) == i) {
@@ -262,7 +262,7 @@ const data={
   }
   
   
-  function renderCategories() {
+function renderCategories() {
       const containerCategories = document.getElementById('box-categorias');
       const fragment = document.createDocumentFragment();
   
@@ -276,21 +276,21 @@ const data={
       })
   
       containerCategories.appendChild(fragment);
-  }
+}
   
-  renderCategories();
+renderCategories();
   
   
-  const checkboxs = document.querySelectorAll('input[type="checkbox"]');
+const checkboxs = document.querySelectorAll('input[type="checkbox"]');
   
   
   
   
 
   // MOSTRAR CARDS SEGÚN LO INGRESADO POR TECLADO EN EL BUSCADOR
-  let userSearch;
+let userSearch;
   
-  inputSearch.addEventListener('keyup', () => {
+inputSearch.addEventListener('keyup', () => {
       userSearch = inputSearch.value.toLowerCase();
       findCoincidences(userSearch);
   })
@@ -302,7 +302,7 @@ const data={
   })
   
   
-  const findCoincidences = (search) => {
+const findCoincidences = (search) => {
       let cardsShown = 0;
   
       cards.forEach((card) => {
@@ -321,19 +321,19 @@ const data={
       } else {
           msgError.classList.add('hidden');
       }
-  }
+}
   
   
   
   // MOSTRAR CARDS QUE COINCIDAN CON LAS CHECKBOX QUE ESTÉN "CHECKED"
   
-  let checkboxsChecked = 0;
-  let evts;
-  let section;
-  let eventsToShow = [];
-  let msgError = document.getElementById("msg-error") 
+let checkboxsChecked = 0;
+let evts;
+let section;
+let eventsToShow = [];
+let msgError = document.getElementById("msg-error") 
   
-  checkboxs.forEach((checkbox) => {
+checkboxs.forEach((checkbox) => {
       checkbox.addEventListener('change', () => {
           
           if (checkbox.checked) { 
@@ -392,53 +392,23 @@ const data={
           }
       })
       
-  })
+})
 
 
 
-  // PAGE DETAILS 
+// PAGE DETAILS 
 
 
-const detailsCards = document.getElementById("details__cards")
-let buttonCards = document.querySelectorAll(".button-more")
 
-console.log("button", buttonCards)
-
-
-for(let i=0; i < buttonCards.length; i++){
-  buttonCards[i].addEventListener("click", () =>{
-    rendersDetails(i)
-  })
-}
-
-const rendersDetails = () => {
-  // const fragment = document.createDocumentFragment();
-
-  // data.eventos.map((event, index) =>{
-  //     const div = document.createElement("div");
-
-  //     div.innerHTML = `
-  //     <div class="container__details">
-  //         <div class="content__image">
-  //             <img src="${event.image}" alt="imagen sobre el evento" class="image__events">
-  //         </div>
-  //         <div class="content__infoDetails">
-  //             <h2 class="name__events">${event.name}</h2>
-  //             <p class="price__events">${event.price}</p>
-  //             <p class="category__events">${event.category}</p>
-  //             <!-- <p>Ver formas de pago</p> -->
-  //             <p class="descriptions__events">${event.description}</p>
-  //             <button type="button" class="button__buy">Buy Tickets</button>
-  //         </div>
-  //     </div>
-  //     `
-
-  //     fragment.appendChild(div)
-  // })
-
-  // detailsCards.appendChild(fragment);
-  console.log("Hola Mundo xD")
-}
-// rendersDetails()
+const detailPage = () => {
+  let buttonCards = document.querySelectorAll(".button__more")
+  console.log("buttons", buttonCards)
+  for(let i=0; i < buttonCards.length; i++){
+    buttonCards[i].addEventListener("click", () =>{
+      console.log("indice", i)
+      localStorage.setItem("detail", i)
+    })
+}}
+detailPage()
   
   
