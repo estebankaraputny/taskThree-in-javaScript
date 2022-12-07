@@ -218,7 +218,7 @@ const renderCards = (array, section) => {
                       <p class="card-text">${event.description}</p>
                       <div class="card-price d-flex justify-content-between align-items-center">
                         <p class="m-0">$${event.price}</p>
-                        <a href="../pages/details.html" class="btn btn-dark btn-shadow button__more" target="_blank">Know more</a>
+                        <a href="./pages/details.html" class="btn btn-dark btn-shadow button__more" target="_blank">Know more</a>
                       </div>
                     </div>
                   </div>
@@ -260,22 +260,24 @@ const sevenEventsCategories = [];
           sevenEventsCategories.push(eventsCategories[i]);
       }
   }
-  
+
   
 function renderCategories() {
-      const containerCategories = document.getElementById('box-categorias');
-      const fragment = document.createDocumentFragment();
-  
-      sevenEventsCategories.map((eventCategory) => {
-          const div = document.createElement('div');
-          div.innerHTML = `
-              <input id="${eventCategory.toLowerCase().replaceAll(" ", "-")}" name="categoria" value="${eventCategory.toLowerCase().replace(" ", "-")}" type="checkbox">
-              <label for="${eventCategory.toLowerCase().replaceAll(" ", "-")}">${eventCategory}</label>
-              `
-          fragment.appendChild(div);
-      })
-  
-      containerCategories.appendChild(fragment);
+  if (window.location.pathname.split("/").pop() != "details.html"){
+    const containerCategories = document.getElementById('box-categorias');
+    const fragment = document.createDocumentFragment();
+    
+    sevenEventsCategories.map((eventCategory) => {
+      const div = document.createElement('div');
+      div.innerHTML = `
+      <input id="${eventCategory.toLowerCase().replaceAll(" ", "-")}" name="categoria" value="${eventCategory.toLowerCase().replace(" ", "-")}" type="checkbox">
+      <label for="${eventCategory.toLowerCase().replaceAll(" ", "-")}">${eventCategory}</label>
+      `
+      fragment.appendChild(div);
+    })
+    
+    containerCategories.appendChild(fragment);
+  }
 }
   
 renderCategories();
@@ -400,15 +402,31 @@ checkboxs.forEach((checkbox) => {
 
 
 
-const detailPage = () => {
-  let buttonCards = document.querySelectorAll(".button__more")
-  console.log("buttons", buttonCards)
-  for(let i=0; i < buttonCards.length; i++){
-    buttonCards[i].addEventListener("click", () =>{
-      console.log("indice", i)
-      localStorage.setItem("detail", i)
-    })
-}}
-detailPage()
+// const detailPage = () => {
+//   let buttonCards = document.querySelectorAll(".button__more")
+//   console.log("buttons", buttonCards)
+//   for(let i=0; i < buttonCards.length; i++){
+//     buttonCards[i].addEventListener("click", () =>{
+//       console.log("indice", i)
+//       localStorage.setItem("detail", i)
+//     })
+// }}
+// detailPage()
+
+
+
+
+let cardsTitle = document.querySelectorAll(".card-title")
+// console.log("title", cardsTitle[5].outerText)
+let buttonCards = document.querySelectorAll(".button__more")
+
+for(let i = 0; i < cardsTitle.length; i++ ){
+  console.log(cardsTitle[i].outerText)
   
+  buttonCards[i].addEventListener("click", () =>{
+    localStorage.setItem("title", cardsTitle[i].outerText.toLowerCase().replaceAll(" ", "-"))
+  })
+}
+
+
   
