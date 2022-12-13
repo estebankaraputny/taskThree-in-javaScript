@@ -703,8 +703,8 @@ console.log("\n\n10% EVENTOS CON MAYOR CAPACIDAD",arrayMayCap)
 
 
       
-// console.log("Past Events", pastEvents)
-// console.log("Upcoming Events", upcomingEvents)
+console.log("Past Events", pastEvents)
+console.log("Upcoming Events", upcomingEvents)
 
 
 // EVENTOS ORDENADOS DE MENOR A MAYOR POR ASISTENCIA
@@ -757,97 +757,164 @@ console.log("\n\n10% DE EVENTOS CON MAYOR ASISTENCIAS", eventsMay10Percent)
 
 //########################################################################################################################################################################
 
-
-
-
-//1-Obtener todas las categorias de Upcoming
-
-//2-Obtener ingresos (Ganancias) de Upcoming
-
-//3-Obtener porcentaje de asistencia de Upcoming
+//1-Separar por categoria los eventos en array más chicos (En Upcoming)
 
 let arrayCategoryUpcoming = [];
-let revenuesUpcomin = [];
-let percentageUpcomiong = [];
-
-upcomingEvents.forEach((event) =>{
-  let categoryEvents = event.category;
-  arrayCategoryUpcoming.push(categoryEvents);
-  arrayCategoryUpcoming = arrayCategoryUpcoming.filter((category, index) =>{
-    return arrayCategoryUpcoming.indexOf(category) === index;
-  })
-})
-
-
-console.log("\n\nCATEGORIAS DE EVENTOS UPCOMING", arrayCategoryUpcoming)
 
 
 upcomingEvents.forEach((event) =>{
-    let preicesEvents = event.price;
-    let estimateEvents= event.estimate;
-    console.log("Estimado por evento $",preicesEvents*estimateEvents)
-    revenuesUpcomin.push(preicesEvents * estimateEvents);
-})
+    let categoryEvents = event.category;
+    arrayCategoryUpcoming.push(categoryEvents);
+    arrayCategoryUpcoming = arrayCategoryUpcoming.filter((category, index) =>{
+         return arrayCategoryUpcoming.indexOf(category) === index;
+            })
+});
 
-// console.log(revenuesUpcomin)
 
-//1-Obtener todas las categorias de Past
+console.log("\n\nARRAY DE TODAS LAS CATEGORIAS EN UPCOMING",arrayCategoryUpcoming)
 
-//2-Obtener ingresos (Ganancias) de Past
+let museumCategoryUpcoming = [];
+let bookCategoryUpcoming = [];
+let musicCategoryUpcoming = [];
+let cinemaCategoryUpcoming = [];
+let costumeCategoryUpcoming = [];
+let raceCategoryUpcoming = [];
 
-//3-Obtener porcentaje de asistencia de Past
+const separarForCategoryUpcoming = () => {
+
+    const categoryMuseum = upcomingEvents.filter(upcomingEvents => upcomingEvents.category === "Museum");
+    const categoryCostumeParty = upcomingEvents.filter(upcomingEvents => upcomingEvents.category === "Costume Party");
+    const categoryMusicConcert = upcomingEvents.filter(upcomingEvents => upcomingEvents.category === "Music Concert");
+    const categoryBookExchange = upcomingEvents.filter(upcomingEvents => upcomingEvents.category === "Book Exchange");
+    const categoryCinema = upcomingEvents.filter(upcomingEvents => upcomingEvents.category === "Cinema");
+    const categoryRace = upcomingEvents.filter(upcomingEvents => upcomingEvents.category === "Race");
+    
+    museumCategoryUpcoming.push(categoryMuseum);
+    costumeCategoryUpcoming.push(categoryCostumeParty);
+    musicCategoryUpcoming.push(categoryMusicConcert);
+    bookCategoryUpcoming.push(categoryBookExchange);
+    cinemaCategoryUpcoming.push(categoryCinema);
+    raceCategoryUpcoming.push(categoryRace);
+    
+}
+separarForCategoryUpcoming()
+
+
+// console.log("\n\nEventos Categoria Museo",museumCategoryUpcoming);
+// console.log("Eventos Categoria Costume Party", costumeCategoryUpcoming);
+// console.log("Eventos Categoria Music Concert", musicCategoryUpcoming);
+// console.log("Eventos Categoria BookExchange", bookCategoryUpcoming);
+// console.log("Eventos Categoria Cinema", cinemaCategoryUpcoming);
+// console.log("Eventos Categoria Race", raceCategoryUpcoming);
+
+
+
+//SUMAR TODAS LAS GANANCIAS DE LOS EVENTOS POR CATEGORIA
+
+const calculateTotalGainsUpcoming = (category) => {
+    let allPrice = [];
+    category[0].forEach((event) => {
+      const estimateAssitance = event.estimate;
+      const priceForEvent = event.price;
+      const estimateGanancia = estimateAssitance * priceForEvent;
+      allPrice.push(estimateGanancia);
+    });
+    return allPrice.reduce((total, value) => total + value, 0);
+  }
+  
+//   console.log("Ganancia total de Museo", calculateTotalGainsUpcoming(museumCategoryUpcoming), "price");
+//   console.log("Ganancia total Costume", calculateTotalGainsUpcoming(costumeCategoryUpcoming), "price");
+//   console.log("Ganancia total Music", calculateTotalGainsUpcoming(musicCategoryUpcoming), "price");
+//   console.log("Ganancia total Book", calculateTotalGainsUpcoming(bookCategoryUpcoming), "price");
+//   console.log("Ganancia total Cinema", calculateTotalGainsUpcoming(cinemaCategoryUpcoming), "price");
+//   console.log("Ganancia total Race", calculateTotalGainsUpcoming(raceCategoryUpcoming), "price");
+  
+
+
+//3- OBTENER PROMEDIO DE ASISTENCIAS POR CATEGORIA UPCOMING
+
+// ########################################################################################################################################################################
+
+
+//1-Separar por categoria los eventos en array más chicos (En Past)
+
 
 let arrayCategoryPast = [];
-let revenuesPast = [];
-let percentagePast = [];
+
 
 pastEvents.forEach((event) =>{
-    let catagoryPast = event.category;
-    arrayCategoryPast.push(catagoryPast);
+    let categoryEvents = event.category;
+    arrayCategoryPast.push(categoryEvents);
     arrayCategoryPast = arrayCategoryPast.filter((category, index) =>{
-        return arrayCategoryPast.indexOf(category) === index;
-    })
-})
-
-console.log("\n\nCATEGORIA DE EVENTOS PAST", arrayCategoryPast)
+         return arrayCategoryPast.indexOf(category) === index;
+            })
+});
 
 
-pastEvents.forEach((event) =>{
-    let preicesEvents = event.price;
-    let assistanceEvents= event.assistance;
-    console.log("Ganacias por evento pasados $",preicesEvents*assistanceEvents)
-    revenuesPast.push(preicesEvents * assistanceEvents);
-})
+console.log("\n\nARRAY DE TODAS LAS CATEGORIAS EN PAST",arrayCategoryPast)
 
+let museumCategoryPast = [];
+let bookCategoryPast = [];
+let foodCategoryPast = [];
+let cinemaCategoryPast = [];
+let costumeCategoryPast = [];
+let raceCategoryPast = [];
 
-pastEvents.forEach((event) =>{
-    const pastAssintace = event.assistance;
-    const pastCapacity = event.capacity;
-    console.log("Porcentaje de asistencia por evento: ", Math.round(pastAssintace * 100 / pastCapacity), "%")
-    percentagePast.push(Math.round(pastAssintace * 100 / pastCapacity))
-})
+const separarForCategoryPast = () => {
 
-
-const eventsUpcoming = document.getElementById("eventsUpcoming")
-
-const renderUpcoming = () =>{
-  
-  for(let i=0; i < arrayCategoryUpcoming.length; i++){
-    eventsUpcoming.innerHTML = `
-                <tr>
-                  <td>Categories</td>
-                  <td>Revenues</td>
-                  <td>Percentage of attendance</td>
-                </tr>
-                <tr>
-                  <td></td>
-                </tr>
-                
-    `
-  }
+const categoryMuseum = pastEvents.filter(pastEvents => pastEvents.category === "Museum");
+const categoryCostumeParty = pastEvents.filter(pastEvents => pastEvents.category === "Costume Party");
+    const categoryFoodFair = pastEvents.filter(pastEvents => pastEvents.category === "Food Fair");
+    const categoryBookExchange = pastEvents.filter(pastEvents => pastEvents.category === "Book Exchange");
+    const categoryCinema = pastEvents.filter(pastEvents => pastEvents.category === "Cinema");
+    const categoryRace = pastEvents.filter(pastEvents => pastEvents.category === "Race");
+    
+    museumCategoryPast.push(categoryMuseum);
+    costumeCategoryPast.push(categoryCostumeParty);
+    foodCategoryPast.push(categoryFoodFair);
+    bookCategoryPast.push(categoryBookExchange);
+    cinemaCategoryPast.push(categoryCinema);
+    raceCategoryPast.push(categoryRace);
+    
 }
+separarForCategoryPast()
 
-renderUpcoming()
+
+// console.log("\n\nEventos Categoria Museo",museumCategoryPast);
+// console.log("Eventos Categoria Costume Party", costumeCategoryPast);
+// console.log("Eventos Categoria Music Concert", foodCategoryPast);
+// console.log("Eventos Categoria BookExchange", bookCategoryPast);
+// console.log("Eventos Categoria Cinema", cinemaCategoryPast);
+// console.log("Eventos Categoria Race", raceCategoryPast);
+
+
+
+//SUMAR TODAS LAS GANANCIAS DE LOS EVENTOS POR CATEGORIA
+
+const calculateTotalGainsPast = (category) => {
+    let allPrice = [];
+    category[0].forEach((event) => {
+      const estimateAssitance = event.assistance;
+      const priceForEvent = event.price;
+      const estimateGanancia = estimateAssitance * priceForEvent;
+      allPrice.push(estimateGanancia);
+    });
+    return allPrice.reduce((total, value) => total + value, 0);
+  }
+  
+//   console.log("Ganancia total de Museo", calculateTotalGainsPast(museumCategoryPast), "price");
+//   console.log("Ganancia total Costume", calculateTotalGainsPast(costumeCategoryPast), "price");
+//   console.log("Ganancia total Music", calculateTotalGainsPast(foodCategoryPast), "price");
+//   console.log("Ganancia total Book", calculateTotalGainsPast(bookCategoryPast), "price");
+//   console.log("Ganancia total Cinema", calculateTotalGainsPast(cinemaCategoryPast), "price");
+//   console.log("Ganancia total Race", calculateTotalGainsPast(raceCategoryPast), "price");
+  
+
+
+//3- OBTENER PROMEDIO DE ASISTENCIAS POR CATEGORIA UPCOMING
+
+
+
 
 
 
@@ -872,3 +939,154 @@ renderUpcoming()
 // };
 // pastAndUpcoming()
 //########################################################################################################################################################################
+
+//RENDERIZAR TABLA ONE STATICTICS
+
+const tableOne = document.getElementById("tableOne")
+
+const renderTableOne = () =>{
+    tableOne.innerHTML = `<thead>
+         <tr>
+            <th colspan="3" class="colorDeFondo__tabla">Events statistics</th>
+        </tr>
+    </thead>
+    <tbody id="eventsStatistics">
+        <tr>
+            <td>Events width the highest percentage of attendance</td>
+            <td>Events with the lowest percentage of attendance</td>
+            <td>Event with larger capacity</td>
+        </tr>
+        <tr>
+            <td>${eventsMay10Percent[0]}%</td>
+            <td>${eventsMen10Percent[0]}%</td>
+            <td>${arrayMayCap[0].capacity}</td>
+        </tr>
+        <tr>
+            <td>${eventsMay10Percent[1]}%</td>
+            <td>${eventsMen10Percent[1]}%</td>
+            <td>${arrayMayCap[1].capacity}</td>
+        </tr>
+        <tr>
+            <td>${eventsMay10Percent[2]}%</td>
+            <td>${eventsMen10Percent[2]}%</td>
+            <td>${arrayMayCap[2].capacity}</td>
+        </tr>
+        <tr>
+            <td>${eventsMay10Percent[3]}</td>
+            <td>${eventsMen10Percent[3]}</td>
+            <td>${arrayMayCap[3].capacity}</td>
+        </tr>
+        <tr>
+            <td>${eventsMay10Percent[4]}</td>
+            <td>${eventsMen10Percent[4]}</td>
+            <td>${arrayMayCap[4].capacity}</td>
+        </tr>
+    </tbody>`;
+}
+renderTableOne()
+
+//RENDERIZACION TABLE TWO UPCOMING
+
+const tableTwo = document.getElementById("tableTwo");
+
+const renderTableTwo = () => {
+    tableTwo.innerHTML =
+    `<thead>
+        <tr>
+            <th colspan="3" class="colorDeFondo__tabla">Upcoming events statistics by category</th>
+        </tr>
+    </thead>
+    <tbody id="eventsUpcoming">
+        <tr>
+            <td>Categories</td>
+            <td>Revenues</td>
+            <td>Percentage of attendance</td>
+        </tr>
+        <tr>
+            <td>${arrayCategoryUpcoming[0]}</td>
+            <td>$${calculateTotalGainsUpcoming(costumeCategoryUpcoming)}</td>
+            <td>x%</td>
+        </tr>
+        <tr>
+            <td>${arrayCategoryUpcoming[1]}</td>
+            <td>$${calculateTotalGainsUpcoming(musicCategoryUpcoming)}</td>
+            <td>x%</td>
+        </tr>
+        <tr>
+            <td>${arrayCategoryUpcoming[2]}</td>
+            <td>$${calculateTotalGainsUpcoming(bookCategoryUpcoming)}</td>
+            <td>x%</td>
+        </tr>
+        <tr>
+            <td>${arrayCategoryUpcoming[3]}</td>
+            <td>$${calculateTotalGainsUpcoming(cinemaCategoryUpcoming)}</td>
+            <td>x%</td>
+        </tr>
+        <tr>
+            <td>${arrayCategoryUpcoming[4]}</td>
+            <td>$${calculateTotalGainsUpcoming(raceCategoryUpcoming)}</td>
+            <td>x%</td>
+        </tr>
+        <tr>
+            <td>${arrayCategoryUpcoming[5]}</td>
+            <td>$${calculateTotalGainsUpcoming(museumCategoryUpcoming)}</td>
+            <td>x%</td>
+        </tr>
+    </tbody>`
+}
+renderTableTwo()
+
+
+
+//RENDERIZAR TABLE THREE PAST
+
+const tableThree = document.getElementById("tableThree");
+
+
+const renderTableThree = () =>{
+    tableThree.innerHTML = `
+        <thead>
+              <tr>
+                <th colspan="3" class="colorDeFondo__tabla">Past events statistics by category</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Categories</td>
+                <td>Revenues</td>
+                <td>Percentage of attendance</td>
+              </tr>
+              <tr>
+                <td>${arrayCategoryPast[0]}</td>
+                <td>$${calculateTotalGainsPast(foodCategoryPast)}</td>
+                <td>x%</td>
+              </tr>
+              <tr>
+                <td>${arrayCategoryPast[1]}</td>
+                <td>$${calculateTotalGainsPast(museumCategoryPast)}</td>
+                <td>x%</td>
+              </tr>
+              <tr>
+                <td>${arrayCategoryPast[2]}</td>
+                <td>$${calculateTotalGainsPast(raceCategoryPast)}</td>
+                <td>x%</td>
+              </tr>
+              <tr>
+                <td>${arrayCategoryPast[3]}</td>
+                <td>$${calculateTotalGainsPast(cinemaCategoryPast)}</td>
+                <td>x%</td>
+              </tr>
+              <tr>
+                <td>${arrayCategoryPast[4]}</td>
+                <td>$${calculateTotalGainsPast(bookCategoryPast)}</td>
+                <td>x%</td>
+              </tr>
+              <tr>
+                <td>${arrayCategoryPast[5]}</td>
+                <td>$${calculateTotalGainsPast(costumeCategoryPast)}</td>
+                <td>x%</td>
+              </tr>
+        </tbody>
+    `
+}
+renderTableThree()
