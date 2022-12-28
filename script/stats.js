@@ -874,8 +874,8 @@ let raceCategoryPast = [];
 
 const separarForCategoryPast = () => {
 
-const categoryMuseum = pastEvents.filter(pastEvents => pastEvents.category === "Museum");
-const categoryCostumeParty = pastEvents.filter(pastEvents => pastEvents.category === "Costume Party");
+    const categoryMuseum = pastEvents.filter(pastEvents => pastEvents.category === "Museum");
+    const categoryCostumeParty = pastEvents.filter(pastEvents => pastEvents.category === "Costume Party");
     const categoryFoodFair = pastEvents.filter(pastEvents => pastEvents.category === "Food Fair");
     const categoryBookExchange = pastEvents.filter(pastEvents => pastEvents.category === "Book Exchange");
     const categoryCinema = pastEvents.filter(pastEvents => pastEvents.category === "Cinema");

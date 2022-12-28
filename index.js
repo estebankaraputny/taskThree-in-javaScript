@@ -664,8 +664,8 @@ const mainDetails = document.getElementById('main-details');
   
   
   
-  // ****************************************************************************************************************
-  // COMPARACIÓN DE FECHAS
+// ****************************************************************************************************************
+// COMPARACIÓN DE FECHAS
   
 const pastEvents = [];
 const upcomingEvents = [];
@@ -687,8 +687,8 @@ events.map((event) => {
 })
   
   
-  // ****************************************************************************************************************
-  // CREACIÓN Y RENDERIZACIÓN DE CARDS
+// ****************************************************************************************************************
+// CREACIÓN Y RENDERIZACIÓN DE CARDS
 let cards;
   
 const renderCards = (array, section) => {
@@ -755,7 +755,7 @@ let currentURL = window.location.pathname.split("/").pop();
   
   
   
-  // RENDERIZAR CHECKBOX DE CATEGORÍAS DINAMICAMENTE
+// RENDERIZAR CHECKBOX DE CATEGORÍAS DINAMICAMENTE
 
 const eventsCategories = events.map((event) => event.category);
   
@@ -796,7 +796,7 @@ const checkboxs = document.querySelectorAll('input[type="checkbox"]');
   
   
 
-  // MOSTRAR CARDS SEGÚN LO INGRESADO POR TECLADO EN EL BUSCADOR
+// MOSTRAR CARDS SEGÚN LO INGRESADO POR TECLADO EN EL BUSCADOR
 let userSearch;
   
 inputSearch.addEventListener('keyup', () => {
@@ -834,7 +834,7 @@ const findCoincidences = (search) => {
   
   
   
-  // MOSTRAR CARDS QUE COINCIDAN CON LAS CHECKBOX QUE ESTÉN "CHECKED"
+// MOSTRAR CARDS QUE COINCIDAN CON LAS CHECKBOX QUE ESTÉN "CHECKED"
   
 let checkboxsChecked = 0;
 let evts;
@@ -904,9 +904,7 @@ checkboxs.forEach((checkbox) => {
 })
 
 
-
-// PAGE DETAILS 
-
+// PAGE DETAILS  
 
 
 // const detailPage = () => {
